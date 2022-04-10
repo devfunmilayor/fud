@@ -1,13 +1,7 @@
 import 'dart:io';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:fud/model/food_model.dart';
 import 'package:fud/services/api_response.dart';
-import 'package:fud/services/base_api.dart';
 import 'package:fud/util/constant.dart';
-import 'package:fud/util/shared_res.dart';
 import 'package:http/http.dart' as http;
 // class ApiManager extends BaseAPi {
 //   Future<FoodBankResp> getAllFoodResp(BuildContext context) async {

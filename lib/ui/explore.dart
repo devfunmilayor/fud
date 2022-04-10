@@ -34,42 +34,10 @@ class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
     var s = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: foodModel.foodListData ==null || foodModel.loading ? Center(
-          child: SpinKitFadingCircle(
-            size: 15,
-            itemBuilder: (BuildContext context, int index) {
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                ),
-              );
-            },
-          ),
-        ): ListView(
-          scrollDirection: Axis.vertical,
-          children: [
-            CustomAppBar(),
-            Container(
-              margin: EdgeInsets.only(top: 25.h),
-              height: s.height * 0.16.h,
-              width: 0.9.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                //color: Colors.black,
-                //   image: DecorationImage(
-                //     fit: BoxFit.fill,
-                //     image: AssetImage(SvgDataAssets.stake),
-                //   ),
-              ),
-              child: CachedNetworkImage(
-                width: s.width * 0.23.w,
-                height: s.height * 0.09.h,
-                fit: BoxFit.cover,
-                imageUrl: foodModel.foodBankResp.data.first.image,
-                progressIndicatorBuilder: (context, url, downloadProgress) {
-                  return SpinKitFadingCircle(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: foodModel.foodListData == null || foodModel.loading
+              ? Center(
+                  child: SpinKitFadingCircle(
                     size: 15,
                     itemBuilder: (BuildContext context, int index) {
                       return DecoratedBox(
@@ -79,92 +47,127 @@ class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
                         ),
                       );
                     },
-                  );
-                },
-                errorWidget: (context, url, error) =>
-                    Image.asset(SvgDataAssets.stake , fit: BoxFit.fill,),
-              ),
-            ),
-            HD(
-              height: 0.03.h,
-            ),
-            StakeWid(
-              amount: '\$${foodModel.foodBankResp.data.first.price}',
-              globalStakeData: foodModel.foodBankResp.data.first.title,
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  // margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.05.h,
-                  child: CupertinoSlidingSegmentedControl<_Tab>(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40.w, vertical: 10),
-                      children: {
-                        _Tab.one: Text(
-                          'Steaks',
-                          style: GoogleFonts.montserrat(
-                              fontSize: 8.5.sp, fontWeight: FontWeight.w300),
+                  ),
+                )
+              : ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    CustomAppBar(),
+                    Container(
+                      margin: EdgeInsets.only(top: 25.h),
+                      height: s.height * 0.16.h,
+                      width: 0.9.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: CachedNetworkImage(
+                        width: s.width * 0.23.w,
+                        height: s.height * 0.09.h,
+                        fit: BoxFit.cover,
+                        imageUrl: foodModel.foodBankResp.data.first.image,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) {
+                          return SpinKitFadingCircle(
+                            size: 15,
+                            itemBuilder: (BuildContext context, int index) {
+                              return DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  shape: BoxShape.circle,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        errorWidget: (context, url, error) => Image.asset(
+                          SvgDataAssets.stake,
+                          fit: BoxFit.fill,
                         ),
-                        _Tab.two: Text(
-                          'Veg',
-                          style: GoogleFonts.montserrat(
-                              fontSize: 8.5.sp, fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                    HD(
+                      height: 0.03.h,
+                    ),
+                    StakeWid(
+                      amount: '\$${foodModel.foodBankResp.data.first.price}',
+                      globalStakeData: foodModel.foodBankResp.data.first.title,
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          // margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.05.h,
+                          child: CupertinoSlidingSegmentedControl<_Tab>(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 40.w, vertical: 10),
+                              children: {
+                                _Tab.one: Text(
+                                  'Steaks',
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 8.5.sp,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                _Tab.two: Text(
+                                  'Veg',
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 8.5.sp,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                _Tab.three: Text(
+                                  'Beef',
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 8.5.sp,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                _Tab.four: Text(
+                                  'Chicken',
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 8.5.sp,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              },
+                              backgroundColor: Colors.transparent,
+                              thumbColor: AppColor.appColor,
+                              groupValue: _selectedTab,
+                              onValueChanged: (val) {
+                                setState(() {
+                                  _selectedTab = val;
+                                });
+                              }),
                         ),
-                        _Tab.three: Text(
-                          'Beef',
-                          style: GoogleFonts.montserrat(
-                              fontSize: 8.5.sp, fontWeight: FontWeight.w300),
-                        ),
-                        _Tab.four: Text(
-                          'Chicken',
-                          style: GoogleFonts.montserrat(
-                              fontSize: 8.5.sp, fontWeight: FontWeight.w300),
-                        ),
+                      ],
+                    ),
+
+                    //SteakR(),
+
+                    Builder(
+                      // ignore: missing_return
+                      builder: (context) {
+                        switch (_selectedTab) {
+                          case _Tab.one:
+                            return SteakWidget(
+                              controller: controller,
+                            );
+                          case _Tab.two:
+                            return SteakWidget(
+                              controller: controller,
+                            );
+                          case _Tab.three:
+                            return SteakWidget(
+                              controller: controller,
+                            );
+                            break;
+                          case _Tab.four:
+                            return SteakWidget(
+                              controller: controller,
+                            );
+                            break;
+                        }
                       },
-                      backgroundColor: Colors.transparent,
-                      thumbColor: AppColor.appColor,
-                      groupValue: _selectedTab,
-                      onValueChanged: (val) {
-                        setState(() {
-                          _selectedTab = val;
-                        });
-                      }),
-                ),
-              ],
-            ),
-
-            //SteakR(),
-
-            Builder(
-              // ignore: missing_return
-              builder: (context) {
-                switch (_selectedTab) {
-                  case _Tab.one:
-                    return SteakWidget(
-                      controller: controller,
-                    );
-                  case _Tab.two:
-                    return SteakWidget(
-                      controller: controller,
-                    );
-                  case _Tab.three:
-                    return SteakWidget(
-                      controller: controller,
-                    );
-                    break;
-                  case _Tab.four:
-                    return SteakWidget(
-                      controller: controller,
-                    );
-                    break;
-                }
-              },
-            ),
-          ],
-        ) 
-      ),
+                    ),
+                  ],
+                )),
     );
   }
 }

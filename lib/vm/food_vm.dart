@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fud/model/food_model.dart';
 import 'package:fud/services/api_manager.dart';
@@ -12,7 +11,7 @@ class FoodViewModel extends ChangeNotifier {
   UserError _userError;
   UserError get userError => _userError;
   bool _loading = false;
-  FoodBankResp foodBankResp ;
+  FoodBankResp foodBankResp;
   List<FoodData> _foodListData = [];
   List<FoodData> get foodListData => _foodListData;
   bool get loading => _loading;
@@ -36,8 +35,10 @@ class FoodViewModel extends ChangeNotifier {
     setLoadingData(true);
     var faqResp = await FoodService.getAllFood();
     if (faqResp is Success) {
-      foodBankResp =faqResp.successResponse ;
-      print('foodBankResp: ${foodBankResp.data}');
+      foodBankResp = faqResp.successResponse;
+      if (kDebugMode) {
+        print('foodBankResp: ${foodBankResp.data}');
+      }
       setFoodData(foodBankResp.data);
     } else if (faqResp is Error) {
       UserError userError = UserError(
